@@ -1,12 +1,13 @@
+<?xml version="1.0"?>
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>net10.0</TargetFramework>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Evergine.Common" Version="2026.5.5.636-nightly" />
-		<PackageReference Include="Evergine.Components" Version="2026.5.5.636-nightly" />
-		<PackageReference Include="Evergine.Framework" Version="2026.5.5.636-nightly" />
-		<PackageReference Include="Evergine.Editor.Extension" Version="2026.5.5.636-nightly" />
+		<PackageReference Include="Evergine.Common" Version="2026.5.9.250-nightly" />
+		<PackageReference Include="Evergine.Components" Version="2026.5.9.250-nightly" />
+		<PackageReference Include="Evergine.Framework" Version="2026.5.9.250-nightly" />
+		<PackageReference Include="Evergine.Editor.Extension" Version="2026.5.9.250-nightly" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\CesiumDemo\CesiumDemo.csproj" />

@@ -1,5 +1,114 @@
 !Evergine.Framework.Assets.AssetSources.Entities.SceneModel,Evergine.Framework
-Items: []
+Items:
+  - !Evergine.Framework.Assets.AssetSources.Entities.EntityItemModel,Evergine.Framework
+    Name: camera
+    Tag: MainCamera
+    IsEnabled: true
+    IsStatic: false
+    Components:
+      - !Evergine.Framework.Graphics.Transform3D,Evergine.Framework
+        Id: 3f21a790-83da-4ed3-a435-463775792270
+        IsEnabled: true
+        LocalOrientation:
+          W: 1.0
+          X: 0.0
+          Y: 0.0
+          Z: 0.0
+        LocalPosition:
+          X: 0.0
+          Y: 0.0
+          Z: 0.0
+        LocalScale:
+          X: 1.0
+          Y: 1.0
+          Z: 1.0
+      - !Evergine.Framework.Graphics.Camera3D,Evergine.Framework
+        Id: 5ac267f2-3e95-465b-b3b0-ce5ec5f4310f
+        Aperture: 1.0
+        AutoDepthBounds: false
+        AutoExposureEnabled: false
+        CameraOrder: 0.0
+        ClearDepth: 0.0
+        ClearFlags: All
+        ClearStencil: 0
+        Compensation: 0.0
+        DisplayTag: null
+        Exposure: 1.0
+        FarPlane: 1000.0
+        FieldOfView: 0.785398185
+        FieldOfViewAxis: Vertical
+        FocalDistance: 1.0
+        FocalLength: 50.0
+        FrameBuffer: null
+        FrustumCullingEnabled: true
+        HDREnabled: true
+        IsEnabled: true
+        LayerMaskDefaultValue: true
+        LinearBackgroundColor:
+          A: 1.0
+          B: 0.851251662
+          G: 0.306634784
+          R: 0.12752977
+        LogLuminanceRange: 12.0
+        MinLogLuminance: -10.0
+        NearPlane: 0.100000001
+        OrthographicSize: 5.0
+        ProjectionType: Perspective
+        Sensitivity: 100.0
+        SensorSize:
+          X: 36.0
+          Y: 24.0
+        ShutterSpeed: 1.20000005
+        TAU: 1.10000002
+        TagFilter: null
+        UseCustomClearDepth: false
+        UsePhysicalParameters: false
+    Children: []
+    Id: ade737a9-f1cd-4b12-ae8c-611fc180e09c
+  - !Evergine.Framework.Assets.AssetSources.Entities.EntityItemModel,Evergine.Framework
+    Name: directionalLight
+    Tag: null
+    IsEnabled: true
+    IsStatic: false
+    Components:
+      - !Evergine.Framework.Graphics.Transform3D,Evergine.Framework
+        Id: 5d7d8afa-0b1c-40d7-b2c4-b95a066057a8
+        IsEnabled: true
+        LocalOrientation:
+          W: 1.0
+          X: 0.0
+          Y: 0.0
+          Z: 0.0
+        LocalPosition:
+          X: 1000.0
+          Y: 1000.0
+          Z: 0.0
+        LocalScale:
+          X: 1.0
+          Y: 1.0
+          Z: 1.0
+      - !Evergine.Framework.Graphics.DirectionalLight,Evergine.Framework
+        Id: d9806f1f-52de-400d-8c46-e3b6e7509c06
+        Color:
+          A: 255
+          B: 255
+          G: 255
+          R: 255
+        DebugMode: false
+        GammaDistribution: 0.800000012
+        Intensity: 1.0
+        IsEnabled: true
+        IsShadowEnabled: false
+        LinearColor:
+          A: 1.0
+          B: 1.0
+          G: 1.0
+          R: 1.0
+        ShadowBias: 0.00499999989
+        ShadowDistance: 80.0
+        ShadowOpacity: 1.0
+    Children: []
+    Id: b20fd673-2ed4-4924-9c0a-fc00f5f27e59
 Managers:
   - !Evergine.Framework.Managers.AssetSceneManager,Evergine.Framework
     Id: 4ae9964a-5a8a-463f-b714-050389b3b68c

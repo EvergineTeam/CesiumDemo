@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>net10.0</TargetFramework>
@@ -7,14 +8,14 @@
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Evergine.Common" Version="2026.5.5.636-nightly" />
-		<PackageReference Include="Evergine.Components" Version="2026.5.5.636-nightly" />
-		<PackageReference Include="Evergine.Framework" Version="2026.5.5.636-nightly" />
-		<PackageReference Include="Evergine.Mathematics" Version="2026.5.5.636-nightly" />
-		<PackageReference Include="Evergine.Bullet" Version="2026.5.5.636-nightly" />
-		<PackageReference Include="Evergine.Targets" Version="2026.5.5.636-nightly" />
-		<PackageReference Include="Evergine.CodeScenes" Version="2026.5.5.636-nightly" />
-		<PackageReference Include="Evergine.ImGui" Version="2026.5.5.636-nightly" />
-		<ProjectReference Include="C:/code/evergine_team/Evergine.Cesium/Source/Evergine.Cesium/Evergine.Cesium.csproj" />
+		<PackageReference Include="Evergine.Common" Version="2026.5.9.250-nightly" />
+		<PackageReference Include="Evergine.Components" Version="2026.5.9.250-nightly" />
+		<PackageReference Include="Evergine.Framework" Version="2026.5.9.250-nightly" />
+		<PackageReference Include="Evergine.Mathematics" Version="2026.5.9.250-nightly" />
+		<PackageReference Include="Evergine.Bullet" Version="2026.5.9.250-nightly" />
+		<PackageReference Include="Evergine.Targets" Version="2026.5.9.250-nightly" />
+		<PackageReference Include="Evergine.CodeScenes" Version="2026.5.9.250-nightly" />
+		<PackageReference Include="Evergine.ImGui" Version="2026.5.9.250-nightly" />
+		<PackageReference Include="Evergine.Cesium" Version="2026.5.14.16-nightly" />
 	</ItemGroup>
 </Project>
