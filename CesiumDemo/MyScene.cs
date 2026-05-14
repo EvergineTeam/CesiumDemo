@@ -127,7 +127,11 @@ namespace CesiumDemo
         {
             base.Update(deltaTime);
 
-            this.cesiumCoordinator?.WorldCamera.UIHasFocus = imguiWantsCaptureMouse();
+            var worldCamera = this.cesiumCoordinator?.WorldCamera;
+            if (worldCamera != null)
+            {
+                worldCamera.UIHasFocus = imguiWantsCaptureMouse();
+            }
         }
 
         protected override void Draw(TimeSpan deltaTime)
