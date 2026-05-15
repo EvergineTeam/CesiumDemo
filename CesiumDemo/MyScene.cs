@@ -32,6 +32,7 @@ namespace CesiumDemo
     {
         private static readonly string saveAccessTokenFileName_cesium = "cesium_access_token.txt";
         private static readonly string saveAccessTokenFileName_azure = "azure_access_token.txt";
+        private static readonly int[] monthDays = new int[] { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
         private byte[] accessTokenBuffer = new byte[512];
         private byte[] geocodingTextBuffer = new byte[256];
         private byte[] pinNameTextBuffer = new byte[256];
@@ -48,6 +49,8 @@ namespace CesiumDemo
         private List<GeocodingAutocompleteSuggestion> geocodingSuggestions = new List<GeocodingAutocompleteSuggestion>();
         private int edittingPinName = -1;
         private bool needSetKeyboardFocus = false; // true if we just started editting the pin name, so we still need to set the focus on the InputText box
+        private bool useCurrentDateTime = true;
+        private int dayOfMonth = 1, month = 1, hour = 0, minute = 0;
 
         private unsafe bool imguiWantsCaptureMouse() => ImguiNative.igGetIO_Nil()->WantCaptureMouse == 1;
 
@@ -416,15 +419,6 @@ namespace CesiumDemo
                         var placeComp = pin.FindComponent<CesiumPlacerComponent>();
                         this.cesiumCoordinator.WorldCamera.FlyTo(MathHelper.ToDegrees(placeComp.Latitude), MathHelper.ToDegrees(placeComp.Longitude), 2.0);
                     }
-                    //ImguiNative.igSameLine(0, 1);
-                    //ImguiNative.igPushStyleColor_Vec4(ImGuiCol.Button, new Vector4(1, 0, 0, 1));
-                    //ImguiNative.igPushStyleColor_Vec4(ImGuiCol.ButtonHovered, new Vector4(1, 0.3f, 0.3f, 1));
-                    //ImguiNative.igPushStyleColor_Vec4(ImGuiCol.ButtonActive, new Vector4(1, 0.5f, 0.5f, 1));
-                    //if (ImguiNative.igButton($"delete##{i}", new Vector2(0, 0)))
-                    //{
-                    //    deleteInd = i;
-                    //}
-                    //ImguiNative.igPopStyleColor(3);
                 }
                 if (deleteInd >= 0 && deleteInd < this.placedPins.Count)
                 {
@@ -435,7 +429,99 @@ namespace CesiumDemo
                     this.placedPinsMaterials.RemoveRange(deleteInd, 1);
                 }
             }
+            { // date/time
+                ImguiNative.igSeparatorText("Solar Date/Time");
+
+                byte useCurrentDateTimeByte = (byte)(this.useCurrentDateTime ? 1 : 0);
+                ImguiNative.igCheckbox("Use current Date/time (UTC)", &useCurrentDateTimeByte);
+                this.useCurrentDateTime = useCurrentDateTimeByte != 0;
+                if (useCurrentDateTime)
+                {
+                    var now = DateTime.UtcNow;
+                    this.dayOfMonth = now.Day;
+                    this.month = now.Month;
+                    this.hour = now.Hour;
+                    this.minute = now.Minute;
+                }
+
+                if (gui_dateTimeInput(ref this.dayOfMonth, ref this.month, ref this.hour, ref this.minute, !useCurrentDateTime))
+                {
+                    var sunComp = this.Managers.EntityManager.FindFirstComponentOfType<SunLightDirection>();
+                    if (sunComp != null)
+                    {
+                        sunComp.HourOfDay = (uint)this.hour;
+                        sunComp.DayOfYear = 0;
+                        for (int i = 0; i < this.month - 1; i++)
+                        {
+                            sunComp.DayOfYear += (uint)monthDays[i];
+                        }
+                        sunComp.DayOfYear += (uint)this.dayOfMonth;
+                    }
+                }
+            }
             ImguiNative.igEnd();
+        }
+
+        private unsafe bool gui_dateTimeInput(ref int dayOfMonth, ref int month, ref int hour, ref int minute, bool editable)
+        {
+            fixed (int* dayPtr = &dayOfMonth, monthPtr = &month, hourPtr = &hour, minutePtr = &minute)
+            {
+                bool change = false;
+                int itemWidth = 20;
+                ImguiNative.igPushItemWidth(itemWidth);
+                if (editable)
+                {
+                    change |= ImguiNative.igDragInt("##day", dayPtr, 1, 1, monthDays[month - 1], "%02d", ImGuiSliderFlags.None);
+                }
+                else
+                {
+                    ImguiNative.igText($"{dayOfMonth:00}");
+                }
+
+                ImguiNative.igSameLine(0, 1);
+                ImguiNative.igText("/");
+                ImguiNative.igSameLine(0, 1);
+                ImguiNative.igPushItemWidth(itemWidth);
+                if (editable)
+                {
+                    change |= ImguiNative.igDragInt("##month", monthPtr, 1, 1, 12, "%02d", ImGuiSliderFlags.None);
+                }
+                else
+                {
+                    ImguiNative.igText($"{month:00}");
+                }
+
+                ImguiNative.igSameLine(0, 10);
+                ImguiNative.igPushItemWidth(itemWidth);
+                if (editable)
+                {
+                    change |= ImguiNative.igDragInt("##hour", hourPtr, 1, 0, 23, "%02d", ImGuiSliderFlags.None);
+                }
+                else
+                {
+                    ImguiNative.igText($"{hour:00}");
+                }
+
+                ImguiNative.igSameLine(0, 1);
+                ImguiNative.igText(":");
+                ImguiNative.igSameLine(0, 1);
+                ImguiNative.igPushItemWidth(itemWidth);
+                if (editable)
+                {
+                    change |= ImguiNative.igDragInt("##minute", minutePtr, 1, 0, 59, "%02d", ImGuiSliderFlags.None);
+                }
+                else
+                {
+                    ImguiNative.igText($"{minute:00}");
+                }
+
+                month = Math.Clamp(month, 1, 12);
+                dayOfMonth = Math.Clamp(dayOfMonth, 1, monthDays[month - 1]);
+                hour = Math.Clamp(hour, 0, 23);
+                minute = Math.Clamp(minute, 0, 59);
+                
+                return change;
+            }
         }
 
         private unsafe void OnMouseButtonDown(object sender, MouseButtonEventArgs args)
