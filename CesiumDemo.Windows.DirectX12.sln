@@ -1,76 +1,11 @@
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.4.11620.152 stable
+VisualStudioVersion = 18.4.11620.152
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CesiumDemo.Windows.DirectX12", "CesiumDemo.Windows.DirectX12\CesiumDemo.Windows.DirectX12.csproj", "{67B341B9-4BC0-4659-A308-B7135C168FC3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CesiumDemo", "CesiumDemo\CesiumDemo.csproj", "{FDD04AAD-6290-47C5-9F72-099A289325BA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evergine.Common", "C:\code\engine\src\Engine\Common\Evergine.Common\Evergine.Common.csproj", "{B6BD0D3A-1190-47CF-9D1B-DBD87105D594}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evergine.Mathematics", "C:\code\engine\src\Engine\Common\Evergine.Mathematics\Evergine.Mathematics.csproj", "{BF1C32D2-0712-4897-B0F6-C777389E9F64}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evergine.Components", "C:\code\engine\src\Engine\Common\Evergine.Components\Evergine.Components.csproj", "{B60D085D-5C77-4DD1-AF56-710499250344}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evergine.Assets", "C:\code\engine\src\Engine\Common\Evergine.Assets\Evergine.Assets.csproj", "{40F4B153-BD75-4F9F-AEDE-BE447C066055}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evergine.Framework", "C:\code\engine\src\Engine\Common\Evergine_Framework\Evergine.Framework.csproj", "{51230106-717E-4439-B88E-901D11E78D4A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evergine.OpenAL", "C:\code\engine\src\Engine\Audio\Evergine.OpenAL\Evergine.OpenAL.csproj", "{C638EEE3-B1AF-41C2-8185-70CCD77DDB32}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evergine.XAudio2", "C:\code\engine\src\Engine\Audio\Evergine.XAudio2\Evergine.XAudio2.csproj", "{65734D98-4725-4A67-8718-7E0391D9D52A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evergine.DirectX11", "C:\code\engine\src\Engine\Rendering\Evergine.DirectX11\Evergine.DirectX11.csproj", "{EBF777D2-606F-4789-B0AC-7EE6A70C8A7C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evergine.DirectX12", "C:\code\engine\src\Engine\Rendering\Evergine.DirectX12\Evergine.DirectX12.csproj", "{7DED31F9-B217-4839-9A2B-0DE8893E877A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evergine.Metal", "C:\code\engine\src\Engine\Rendering\Evergine.Metal\Evergine.Metal.csproj", "{545FB556-3B09-45FB-ACB1-A4432236E726}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evergine.OpenGL", "C:\code\engine\src\Engine\Rendering\Evergine.OpenGL\Evergine.OpenGL.csproj", "{0DC48399-0AA7-49DC-934C-5476803E8EE0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evergine.Vulkan", "C:\code\engine\src\Engine\Rendering\Evergine.Vulkan\Evergine.Vulkan.csproj", "{8550BA0F-86F5-4C1B-85BA-3ECCCC7805D5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evergine.WebGPU", "C:\code\engine\src\Engine\Rendering\Evergine.WebGPU\Evergine.WebGPU.csproj", "{AC83D0E3-0DE9-4691-90D4-27136F29E0B9}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evergine.Android", "C:\code\engine\src\Engine\WindowSystems\Evergine.Android\Evergine.Android.csproj", "{1CDC7198-FE00-4502-AD3C-AE78FDEEB666}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evergine.Forms", "C:\code\engine\src\Engine\WindowSystems\Evergine.Forms\Evergine.Forms.csproj", "{567CD6A1-521D-4203-8217-CCB82E02768A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evergine.iOS", "C:\code\engine\src\Engine\WindowSystems\Evergine.iOS\Evergine.iOS.csproj", "{8C5351E2-78FC-470A-AEF8-08AE48E2278F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evergine.SDL", "C:\code\engine\src\Engine\WindowSystems\Evergine.SDL\Evergine.SDL.csproj", "{57590060-AF5A-450D-AFED-43DDCE692DB0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evergine.Web", "C:\code\engine\src\Engine\WindowSystems\Evergine.Web\Evergine.Web.csproj", "{DB13DA7F-22A6-40E4-BA5A-CB1A6E62177C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evergine.WinUI", "C:\code\engine\src\Engine\WindowSystems\Evergine.WinUI\Evergine.WinUI.csproj", "{EA39F85A-81DF-4DFC-B0D6-BD7E9DFF6361}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evergine.WPF", "C:\code\engine\src\Engine\WindowSystems\Evergine.WPF\Evergine.WPF.csproj", "{F354C211-FEC9-4A34-9384-F2C9DA6301FB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evergine.Bullet", "C:\code\engine\src\Engine\Physics\Evergine.Bullet\Evergine.Bullet.csproj", "{D8C8EE55-9665-44E5-AE61-AFBBB4B67146}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evergine.Runtimes.GLB", "C:\code\engine\src\Runtimes\Evergine.Runtimes.GLB\Evergine.Runtimes.GLB.csproj", "{078DEC11-3BF0-4F1F-9879-75473859F556}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evergine.Runtimes.Image", "C:\code\engine\src\Runtimes\Evergine.Runtimes.Image\Evergine.Runtimes.Image.csproj", "{B5A9402C-3295-40D1-B7E1-80035F187D18}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evergine.Runtimes.USD", "C:\code\engine\src\Runtimes\Evergine.Runtimes.USD\Evergine.Runtimes.USD.csproj", "{D1DA9A22-4619-D73C-C318-C5EAB9CFED2B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evergine.Runtimes.OBJ", "C:\code\engine\src\Runtimes\Evergine.Runtimes.OBJ\Evergine.Runtimes.OBJ.csproj", "{2717D2A5-C55F-2C33-4189-4F603D8ACD57}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evergine.Runtimes.CAD", "C:\code\engine\src\Runtimes\Evergine.Runtimes.CAD\Evergine.Runtimes.CAD.csproj", "{BFD7F808-C0E1-779A-9558-A90E6B5838D9}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evergine.HLSLEverywhere", "C:\code\engine\src\Tools\Evergine.HLSLEverywhere\Evergine.HLSLEverywhere.csproj", "{A5BA9A75-BE00-4BCA-AEDA-A48B6A89525C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evergine.ImGui", "C:\code\engine\src\Extensions\Evergine.ImGui\Evergine.ImGui.csproj", "{3B6AFC50-4575-4350-B683-D98BC0A304D0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evergine.Networking", "C:\code\engine\src\Extensions\Evergine.Networking\Evergine.Networking.csproj", "{DFB6E6B3-1F6A-489A-BFE3-59FA8F19CC56}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evergine.OpenVR", "C:\code\engine\src\Extensions\Evergine.OpenVR\Evergine.OpenVR.csproj", "{057DE80C-0698-462F-BFC8-8FD9DBDE9F37}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evergine.OpenXR", "C:\code\engine\src\Extensions\Evergine.OpenXR\Evergine.OpenXR.csproj", "{E706A5C2-7A5F-4C7B-B633-B7455DB6E5A5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evergine.WebXR", "C:\code\engine\src\Extensions\Evergine.WebXR\Evergine.WebXR.csproj", "{91D7A52F-CE48-42FF-8477-57763771AC90}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Evergine", "Evergine", "{D3A1F2B4-5C6D-4E7F-8A9B-0C1D2E3F4A5B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -92,39 +27,5 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7FB4780F-59F9-4357-9D0A-C41B393E8799}
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{B6BD0D3A-1190-47CF-9D1B-DBD87105D594} = {D3A1F2B4-5C6D-4E7F-8A9B-0C1D2E3F4A5B}
-		{BF1C32D2-0712-4897-B0F6-C777389E9F64} = {D3A1F2B4-5C6D-4E7F-8A9B-0C1D2E3F4A5B}
-		{B60D085D-5C77-4DD1-AF56-710499250344} = {D3A1F2B4-5C6D-4E7F-8A9B-0C1D2E3F4A5B}
-		{40F4B153-BD75-4F9F-AEDE-BE447C066055} = {D3A1F2B4-5C6D-4E7F-8A9B-0C1D2E3F4A5B}
-		{51230106-717E-4439-B88E-901D11E78D4A} = {D3A1F2B4-5C6D-4E7F-8A9B-0C1D2E3F4A5B}
-		{C638EEE3-B1AF-41C2-8185-70CCD77DDB32} = {D3A1F2B4-5C6D-4E7F-8A9B-0C1D2E3F4A5B}
-		{65734D98-4725-4A67-8718-7E0391D9D52A} = {D3A1F2B4-5C6D-4E7F-8A9B-0C1D2E3F4A5B}
-		{EBF777D2-606F-4789-B0AC-7EE6A70C8A7C} = {D3A1F2B4-5C6D-4E7F-8A9B-0C1D2E3F4A5B}
-		{7DED31F9-B217-4839-9A2B-0DE8893E877A} = {D3A1F2B4-5C6D-4E7F-8A9B-0C1D2E3F4A5B}
-		{545FB556-3B09-45FB-ACB1-A4432236E726} = {D3A1F2B4-5C6D-4E7F-8A9B-0C1D2E3F4A5B}
-		{0DC48399-0AA7-49DC-934C-5476803E8EE0} = {D3A1F2B4-5C6D-4E7F-8A9B-0C1D2E3F4A5B}
-		{8550BA0F-86F5-4C1B-85BA-3ECCCC7805D5} = {D3A1F2B4-5C6D-4E7F-8A9B-0C1D2E3F4A5B}
-		{AC83D0E3-0DE9-4691-90D4-27136F29E0B9} = {D3A1F2B4-5C6D-4E7F-8A9B-0C1D2E3F4A5B}
-		{1CDC7198-FE00-4502-AD3C-AE78FDEEB666} = {D3A1F2B4-5C6D-4E7F-8A9B-0C1D2E3F4A5B}
-		{567CD6A1-521D-4203-8217-CCB82E02768A} = {D3A1F2B4-5C6D-4E7F-8A9B-0C1D2E3F4A5B}
-		{8C5351E2-78FC-470A-AEF8-08AE48E2278F} = {D3A1F2B4-5C6D-4E7F-8A9B-0C1D2E3F4A5B}
-		{57590060-AF5A-450D-AFED-43DDCE692DB0} = {D3A1F2B4-5C6D-4E7F-8A9B-0C1D2E3F4A5B}
-		{DB13DA7F-22A6-40E4-BA5A-CB1A6E62177C} = {D3A1F2B4-5C6D-4E7F-8A9B-0C1D2E3F4A5B}
-		{EA39F85A-81DF-4DFC-B0D6-BD7E9DFF6361} = {D3A1F2B4-5C6D-4E7F-8A9B-0C1D2E3F4A5B}
-		{F354C211-FEC9-4A34-9384-F2C9DA6301FB} = {D3A1F2B4-5C6D-4E7F-8A9B-0C1D2E3F4A5B}
-		{D8C8EE55-9665-44E5-AE61-AFBBB4B67146} = {D3A1F2B4-5C6D-4E7F-8A9B-0C1D2E3F4A5B}
-		{078DEC11-3BF0-4F1F-9879-75473859F556} = {D3A1F2B4-5C6D-4E7F-8A9B-0C1D2E3F4A5B}
-		{B5A9402C-3295-40D1-B7E1-80035F187D18} = {D3A1F2B4-5C6D-4E7F-8A9B-0C1D2E3F4A5B}
-		{D1DA9A22-4619-D73C-C318-C5EAB9CFED2B} = {D3A1F2B4-5C6D-4E7F-8A9B-0C1D2E3F4A5B}
-		{2717D2A5-C55F-2C33-4189-4F603D8ACD57} = {D3A1F2B4-5C6D-4E7F-8A9B-0C1D2E3F4A5B}
-		{BFD7F808-C0E1-779A-9558-A90E6B5838D9} = {D3A1F2B4-5C6D-4E7F-8A9B-0C1D2E3F4A5B}
-		{A5BA9A75-BE00-4BCA-AEDA-A48B6A89525C} = {D3A1F2B4-5C6D-4E7F-8A9B-0C1D2E3F4A5B}
-		{3B6AFC50-4575-4350-B683-D98BC0A304D0} = {D3A1F2B4-5C6D-4E7F-8A9B-0C1D2E3F4A5B}
-		{DFB6E6B3-1F6A-489A-BFE3-59FA8F19CC56} = {D3A1F2B4-5C6D-4E7F-8A9B-0C1D2E3F4A5B}
-		{057DE80C-0698-462F-BFC8-8FD9DBDE9F37} = {D3A1F2B4-5C6D-4E7F-8A9B-0C1D2E3F4A5B}
-		{E706A5C2-7A5F-4C7B-B633-B7455DB6E5A5} = {D3A1F2B4-5C6D-4E7F-8A9B-0C1D2E3F4A5B}
-		{91D7A52F-CE48-42FF-8477-57763771AC90} = {D3A1F2B4-5C6D-4E7F-8A9B-0C1D2E3F4A5B}
 	EndGlobalSection
 EndGlobal
