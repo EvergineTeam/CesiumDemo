@@ -107,6 +107,12 @@ Items:
         ShadowBias: 0.00499999989
         ShadowDistance: 80.0
         ShadowOpacity: 1.0
+      - !Evergine.Cesium.Components.SunLightDirection,Evergine.Cesium
+        Id: af695437-c3e9-41a3-938f-e168282c6408
+        DayOfYear: 80
+        HourOfDay: 12
+        IsEnabled: true
+        UpdateOrder: 0.5
     Children: []
     Id: b20fd673-2ed4-4924-9c0a-fc00f5f27e59
 Managers:
