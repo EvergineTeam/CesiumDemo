@@ -4,7 +4,7 @@ Packages:
     Version: 2026.5.9.250-nightly
   - Id: Evergine.Cesium
     LocalPath: null
-    Version: 2026.5.15.25-nightly
+    Version: 2026.5.16.27-nightly
 Parameters:
   MaxSkinningWeights: 4
   SparseMorphTargets: false

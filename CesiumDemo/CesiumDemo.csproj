@@ -1,21 +1,20 @@
-<?xml version="1.0"?>
-<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<TargetFramework>net10.0</TargetFramework>
-		<GenerateEvergineContent>True</GenerateEvergineContent>
-		<GenerateEvergineAssets>False</GenerateEvergineAssets>
-		<GenerateEvergineScenesCode>True</GenerateEvergineScenesCode>
-		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-	</PropertyGroup>
-	<ItemGroup>
-		<PackageReference Include="Evergine.Common" Version="2026.5.9.250-nightly" />
-		<PackageReference Include="Evergine.Components" Version="2026.5.9.250-nightly" />
-		<PackageReference Include="Evergine.Framework" Version="2026.5.9.250-nightly" />
-		<PackageReference Include="Evergine.Mathematics" Version="2026.5.9.250-nightly" />
-		<PackageReference Include="Evergine.Bullet" Version="2026.5.9.250-nightly" />
-		<PackageReference Include="Evergine.Targets" Version="2026.5.9.250-nightly" />
-		<PackageReference Include="Evergine.CodeScenes" Version="2026.5.9.250-nightly" />
-		<PackageReference Include="Evergine.ImGui" Version="2026.5.9.250-nightly" />
-		<PackageReference Include="Evergine.Cesium" Version="2026.5.15.25-nightly" />
-	</ItemGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <GenerateEvergineContent>True</GenerateEvergineContent>
+    <GenerateEvergineAssets>False</GenerateEvergineAssets>
+    <GenerateEvergineScenesCode>True</GenerateEvergineScenesCode>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Evergine.Common" Version="2026.5.9.250-nightly" />
+    <PackageReference Include="Evergine.Components" Version="2026.5.9.250-nightly" />
+    <PackageReference Include="Evergine.Framework" Version="2026.5.9.250-nightly" />
+    <PackageReference Include="Evergine.Mathematics" Version="2026.5.9.250-nightly" />
+    <PackageReference Include="Evergine.Bullet" Version="2026.5.9.250-nightly" />
+    <PackageReference Include="Evergine.Targets" Version="2026.5.9.250-nightly" />
+    <PackageReference Include="Evergine.CodeScenes" Version="2026.5.9.250-nightly" />
+    <PackageReference Include="Evergine.ImGui" Version="2026.5.9.250-nightly" />
+    <PackageReference Include="Evergine.Cesium" Version="2026.5.16.27-nightly" />
+  </ItemGroup>
 </Project>
