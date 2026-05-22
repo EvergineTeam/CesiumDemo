@@ -552,8 +552,8 @@ namespace CesiumDemo
                 {
                     Latitude = cartographic.Latitude,
                     Longitude = cartographic.Longitude,
-                    Height = cartographic.Height,
-                    AboveTerrain = false,
+                    Height = 0,
+                    HeightIsRelativeToTerrain = true,
                     Rotation = Quaternion.CreateFromYawPitchRoll(0.4f, -0.9f, 0),
                 };
                 var pinEntity = this.pinModel.InstantiateModelHierarchy(this.assetsService);
