@@ -15,6 +15,6 @@
     <PackageReference Include="Evergine.Targets" Version="2026.5.19.266-nightly" />
     <PackageReference Include="Evergine.CodeScenes" Version="2026.5.19.266-nightly" />
     <PackageReference Include="Evergine.ImGui" Version="2026.5.19.266-nightly" />
-    <PackageReference Include="Evergine.Cesium" Version="2026.5.16.30-nightly" />
+    <PackageReference Include="Evergine.Cesium" Version="2026.5.22.40-nightly" />
   </ItemGroup>
 </Project>

@@ -335,7 +335,7 @@ namespace CesiumDemo
                 int deleteInd = -1;
                 for (int i = 0; i < this.placedPins.Count; i++)
                 {
-                    ImguiNative.igPushID_Int(0);
+                    ImguiNative.igPushID_Int(i);
                     var pin = this.placedPins[i];
                     var pinMaterial = this.placedPinsMaterials[i];
                     if (ImguiNative.igColorButton($"##color_{i}", pinMaterial.BaseColor.ToVector4(), ImGuiColorEditFlags.NoTooltip, new Vector2(0, 0)))
@@ -368,8 +368,6 @@ namespace CesiumDemo
                             }
                         }
                         ImguiNative.igEndPopup();
-                        ImguiNative.igPopID();
-
                     }
                     ImguiNative.igSameLine(0, 1);
 
@@ -419,6 +417,7 @@ namespace CesiumDemo
                         var placeComp = pin.FindComponent<CesiumPlacerComponent>();
                         this.cesiumCoordinator.WorldCamera.FlyTo(MathHelper.ToDegrees(placeComp.Latitude), MathHelper.ToDegrees(placeComp.Longitude), 2.0);
                     }
+                    ImguiNative.igPopID();
                 }
                 if (deleteInd >= 0 && deleteInd < this.placedPins.Count)
                 {

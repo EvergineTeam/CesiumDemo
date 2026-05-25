@@ -2,26 +2,32 @@
 
 ## Introduction
 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project.
+This Evergine sample demostrates how to use the Cesium addon.
 
-## Getting Started
-
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-
-1. Installation process
-2. Software dependencies
-3. Latest releases
-4. API references
+![](readme_images/demo.jpg)
 
 ## Build and Test
 
-TODO: Describe and show how to build your code and run the tests.
+Just open the Visual Studio Windows solution and start debugging the project.
 
-## Contribute
+## Obtain Cesium API token
 
-TODO: Explain how other users and developers can contribute to make your code better.
+In order for the application to access the Cesium resources, you will need to obtain a Cesium API access token. \
+You can obtain a free access token for testing purposes from https://ion.cesium.com. \
+Create an account:
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops).
+![](readme_images/sign_in.png)
+
+Then copy and paste the access token into the welcome panel of the demo:
+
+![](readme_images/token_copy.png)
+
+## Obtain Azure Maps API token
+
+Optionally, if you want to be able to use geocoding capabilities, you will need to obtain an access token for Azure Maps access token. \
+You can obtain a free access token for evaluation purposes from https://azure.microsoft.com. \
+Then copy the access token here: \
+![](readme_images/azure_token.png)
 
 ----
 Powered by **[Evergine](http://www.evergine.com)**

@@ -1,10 +1,10 @@
 Packages:
   - Id: Evergine.Core
     LocalPath: null
-    Version: 2026.5.19.266-nightly
+    Version: 2026.5.21.1068-nightly
   - Id: Evergine.Cesium
     LocalPath: null
-    Version: 2026.5.16.30-nightly
+    Version: 2026.5.25.44-nightly
 Parameters:
   MaxSkinningWeights: 4
   SparseMorphTargets: false

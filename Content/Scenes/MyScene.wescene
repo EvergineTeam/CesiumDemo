@@ -46,9 +46,9 @@ Items:
         LayerMaskDefaultValue: true
         LinearBackgroundColor:
           A: 1.0
-          B: 0.851251662
-          G: 0.306634784
-          R: 0.12752977
+          B: 0.0
+          G: 0.0
+          R: 0.0
         LogLuminanceRange: 12.0
         MinLogLuminance: -10.0
         NearPlane: 0.100000001
