@@ -1,0 +1,15 @@
+!Evergine.Assets.Exporters.FontMetaFile,Evergine.Assets
+Id: 96bc3c3b-9e71-4b38-85d3-ffaaf0773886
+DefaultProfile:
+  Charset: '['' '', ''~'']'
+  ExcludeAsset: false
+  MinGlyphSize: 32
+  Name: null
+  Platform: Undefined
+ExportAsRaw: true
+Profiles: {}
+Source:
+  Header:
+    Id: d58f80a9-d723-450e-9f98-53c98a99eda9
+    IsCompressed: true
+  LastModified: 0001-01-01T00:00:00.0000000

@@ -58,11 +58,14 @@ namespace CesiumDemo
         {
             base.RegisterManagers();
 
+            CustomFont roboto = new CustomFont("Fonts/Roboto.ttf");
+
             this.Managers.AddManager(new ImGuiManager()
             {
                 ImGuizmoEnabled = false,
                 ImPlotEnabled = false,
                 ImNodesEnabled = false,
+                CustomFonts = [roboto],
                 MergeCustomFonts = false,
             });
 
@@ -159,6 +162,22 @@ namespace CesiumDemo
                 this.cesiumCoordinator.CurrentStatus == Status.CantReachEndpoint)
             {
                 gui_startMenu();
+                unsafe
+                {
+                    ImGuiStyle* style = ImguiNative.igGetStyle();
+                    ImguiNative.igStyleColorsDark(style);
+                    style->Alpha = 0.95f;
+                    style->WindowRounding = 8.0f;
+                    style->FrameRounding = 4.0f;
+                    style->GrabRounding = 4.0f;
+                    style->ScrollbarRounding = 4.0f;
+                    style->WindowBorderSize = 1.0f;
+                    style->FrameBorderSize = 1.0f;
+                    style->WindowPadding = new Vector2(10f, 9f);
+                    style->FramePadding = new Vector2(7f, 4f);
+                    style->ItemSpacing = new Vector2(6f, 5f);
+                    style->ItemInnerSpacing = new Vector2(6f, 5f);
+                }
             }
             else
             {

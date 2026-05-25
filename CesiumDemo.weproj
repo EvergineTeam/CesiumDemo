@@ -1,7 +1,7 @@
 Packages:
   - Id: Evergine.Core
     LocalPath: null
-    Version: 2026.5.21.1068-nightly
+    Version: 2026.5.24.269-nightly
   - Id: Evergine.Cesium
     LocalPath: null
     Version: 2026.5.25.44-nightly
