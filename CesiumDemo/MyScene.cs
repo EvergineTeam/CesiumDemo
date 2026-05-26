@@ -49,6 +49,8 @@ namespace CesiumDemo
         private List<StandardMaterial> placedPinsMaterials = new List<StandardMaterial>();
         private List<GeocodingAutocompleteSuggestion> geocodingSuggestions = new List<GeocodingAutocompleteSuggestion>();
         private Mutex geocodingSuggestions_mutex = new Mutex();
+        private List<(Guid, string)> changePinNameQueue = new List<(Guid, string)>();
+        private Mutex changePinNameQueue_mutex = new Mutex();
         private int edittingPinName = -1;
         private bool needSetKeyboardFocus = false; // true if we just started editting the pin name, so we still need to set the focus on the InputText box
         private bool useCurrentDateTime = true;
@@ -141,6 +143,18 @@ namespace CesiumDemo
             {
                 worldCamera.UIHasFocus = imguiWantsCaptureMouse();
             }
+
+            changePinNameQueue_mutex.WaitOne();
+            foreach (var (pinId, newName) in this.changePinNameQueue)
+            {
+                var pinEntity = this.placedPins.Find(e => e.Id == pinId);
+                if (pinEntity != null)
+                {
+                    pinEntity.Name = newName;
+                }
+            }
+            this.changePinNameQueue.Clear();
+            changePinNameQueue_mutex.ReleaseMutex();
         }
 
         protected override void Draw(TimeSpan deltaTime)
@@ -598,6 +612,21 @@ namespace CesiumDemo
                 this.placedPins.Add(pinEntity);
                 this.placedPinsMaterials.Add(material);
                 this.cesiumCoordinator.Root.AddChild(pinEntity);
+
+                if (this.cesiumCoordinator.IsGeocodingConfigured)
+                {
+                    var pinId = pinEntity.Id;
+                    this.cesiumCoordinator.ReverseGeocodeAsync(latitudeDegrees, longitudeDegrees)
+                        .ContinueWith((res) =>
+                        {
+                            if (res.Result != null)
+                            {
+                                this.changePinNameQueue_mutex.WaitOne();
+                                this.changePinNameQueue.Add((pinId, res.Result.Result.FormattedAddress));
+                                this.changePinNameQueue_mutex.ReleaseMutex();
+                            }
+                        });
+                }
             }
         }
     }
