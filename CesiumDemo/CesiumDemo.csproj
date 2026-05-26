@@ -7,14 +7,14 @@
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Evergine.Common" Version="2026.5.24.269-nightly" />
-    <PackageReference Include="Evergine.Components" Version="2026.5.24.269-nightly" />
-    <PackageReference Include="Evergine.Framework" Version="2026.5.24.269-nightly" />
-    <PackageReference Include="Evergine.Mathematics" Version="2026.5.24.269-nightly" />
-    <PackageReference Include="Evergine.Bullet" Version="2026.5.24.269-nightly" />
-    <PackageReference Include="Evergine.Targets" Version="2026.5.24.269-nightly" />
-    <PackageReference Include="Evergine.CodeScenes" Version="2026.5.24.269-nightly" />
-    <PackageReference Include="Evergine.ImGui" Version="2026.5.24.269-nightly" />
-    <PackageReference Include="Evergine.Cesium" Version="2026.5.22.40-nightly" />
+    <PackageReference Include="Evergine.Common" Version="2026.5.26.8" />
+    <PackageReference Include="Evergine.Components" Version="2026.5.26.8" />
+    <PackageReference Include="Evergine.Framework" Version="2026.5.26.8" />
+    <PackageReference Include="Evergine.Mathematics" Version="2026.5.26.8" />
+    <PackageReference Include="Evergine.Bullet" Version="2026.5.26.8" />
+    <PackageReference Include="Evergine.Targets" Version="2026.5.26.8" />
+    <PackageReference Include="Evergine.CodeScenes" Version="2026.5.26.8" />
+    <PackageReference Include="Evergine.ImGui" Version="2026.5.26.8" />
+    <PackageReference Include="Evergine.Cesium" Version="2026.5.26.46-nightly" />
   </ItemGroup>
 </Project>
