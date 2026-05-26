@@ -21,6 +21,7 @@ using SharpYaml.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using static Azure.Core.HttpHeader;
 using static CesiumDemo.EvergineContent;
@@ -47,6 +48,7 @@ namespace CesiumDemo
         private List<Entity> placedPins = new List<Entity>();
         private List<StandardMaterial> placedPinsMaterials = new List<StandardMaterial>();
         private List<GeocodingAutocompleteSuggestion> geocodingSuggestions = new List<GeocodingAutocompleteSuggestion>();
+        private Mutex geocodingSuggestions_mutex = new Mutex();
         private int edittingPinName = -1;
         private bool needSetKeyboardFocus = false; // true if we just started editting the pin name, so we still need to set the focus on the InputText box
         private bool useCurrentDateTime = true;
@@ -299,15 +301,19 @@ namespace CesiumDemo
                                     // trigger autocomplete on every text change
                                     if (this.getInputTextStr().Length < 3)
                                     {
+                                        geocodingSuggestions_mutex.WaitOne();
                                         this.geocodingSuggestions.Clear();
+                                        geocodingSuggestions_mutex.ReleaseMutex();
                                     }
                                     else
                                     {
                                         this.cesiumCoordinator.AutocompleteAsync(bytePtrToString(data->Buf))
                                             .ContinueWith((res) =>
                                             {
+                                                geocodingSuggestions_mutex.WaitOne();
                                                 this.geocodingSuggestions.Clear();
                                                 this.geocodingSuggestions.AddRange(res.Result.Suggestions);
+                                                geocodingSuggestions_mutex.ReleaseMutex();
                                             });
                                     }
                                 }
@@ -324,6 +330,7 @@ namespace CesiumDemo
                                 });
                         }
                     }
+                    geocodingSuggestions_mutex.WaitOne();
                     foreach (var suggestion in this.geocodingSuggestions)
                     {
                         if (ImguiNative.igButton(suggestion.DisplayText, new Vector2(200, 0)))
@@ -331,6 +338,7 @@ namespace CesiumDemo
                             this.cesiumCoordinator.WorldCamera.FlyTo(suggestion.Latitude, suggestion.Longitude, 2);
                         }
                     }
+                    geocodingSuggestions_mutex.ReleaseMutex();
                 }
                 else
                 {
