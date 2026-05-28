@@ -372,7 +372,11 @@ namespace CesiumDemo
 
             { // pins
                 ImguiNative.igSeparatorText("Pins");
-                ImguiNative.igText("Right-click to place pins");
+                ImguiNative.igText("Right-click in the scene to place pins");
+                if (this.placedPins.Count > 0)
+                {
+                    ImguiNative.igText("Right-click on the name of a pin to edit the name or delete it");
+                }
                 int deleteInd = -1;
                 for (int i = 0; i < this.placedPins.Count; i++)
                 {
@@ -484,6 +488,7 @@ namespace CesiumDemo
                     this.minute = now.Minute;
                 }
 
+                ImguiNative.igText("MM/DD hh:mm");
                 if (gui_dateTimeInput(ref this.dayOfMonth, ref this.month, ref this.hour, ref this.minute, !useCurrentDateTime))
                 {
                     var sunComp = this.Managers.EntityManager.FindFirstComponentOfType<SunLightDirection>();
@@ -559,6 +564,12 @@ namespace CesiumDemo
                 dayOfMonth = Math.Clamp(dayOfMonth, 1, monthDays[month - 1]);
                 hour = Math.Clamp(hour, 0, 23);
                 minute = Math.Clamp(minute, 0, 59);
+
+                if (editable)
+                {
+                    ImguiNative.igSameLine(0, 10);
+                    ImguiNative.igText("Drag up/down to edit fields");
+                }
                 
                 return change;
             }
