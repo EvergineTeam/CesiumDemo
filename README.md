@@ -35,8 +35,8 @@ Beyond simply loading map data, the project also shows how to:
 
 - `CesiumDemo`: shared application logic and scene behavior.
 - `CesiumDemo.Editor`: Evergine editor-side extensions.
-- `CesiumDemo.Windows`: Windows launcher using DirectX 11.
-- `CesiumDemo.Windows.DirectX12`: Windows launcher using DirectX 12.
+- `CesiumDemo.Windows`: Windows launcher using DirectX 12.
+- `CesiumDemo.Windows.DirectX11`: Windows launcher using DirectX 11.
 - `CesiumDemo.Windows.OpenGL`: Windows launcher using OpenGL.
 - `CesiumDemo.Windows.Vulkan`: Windows launcher using Vulkan.
 - `Content`: scene, mesh, font, and environment assets.
@@ -56,7 +56,7 @@ The project references **Evergine nightly packages** through [`nuget.config`](nu
 
 1. Open the solution that matches the rendering backend you want to test:
    - `CesiumDemo.Windows.sln`
-   - `CesiumDemo.Windows.DirectX12.sln`
+   - `CesiumDemo.Windows.DirectX11.sln`
    - `CesiumDemo.Windows.OpenGL.sln`
    - `CesiumDemo.Windows.Vulkan.sln`
 2. Restore NuGet packages.
