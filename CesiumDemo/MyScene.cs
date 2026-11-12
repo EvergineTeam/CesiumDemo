@@ -7,25 +7,16 @@ using Evergine.Common.Graphics;
 using Evergine.Common.Input.Mouse;
 using Evergine.Components.Graphics3D;
 using Evergine.Framework;
-using Evergine.Framework.Assets.AssetParts;
 using Evergine.Framework.Graphics;
 using Evergine.Framework.Graphics.Effects;
 using Evergine.Framework.Graphics.Materials;
-using Evergine.Framework.Managers;
 using Evergine.Framework.Services;
 using Evergine.Mathematics;
 using Evergine.Runtimes.GLB;
 using Evergine.UI;
-using Newtonsoft.Json.Linq;
-using SharpYaml.Tokens;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using static Azure.Core.HttpHeader;
-using static CesiumDemo.EvergineContent;
-using static Evergine.Bindings.Draco.Draco;
 
 namespace CesiumDemo
 {
@@ -33,8 +24,16 @@ namespace CesiumDemo
     {
         private static readonly string saveAccessTokenFileName_cesium = "cesium_access_token.txt";
         private static readonly string saveAccessTokenFileName_azure = "azure_access_token.txt";
+        private static readonly string saveAccessTokenFileName_google = "google_access_token.txt";
+        private const int TerrainAssetId = 1;      // Cesium ion: Cesium World Terrain
+        private const int BuildingsAssetId = 96188; // Cesium ion: Cesium OSM Buildings
+        private static readonly string[] geocodingProviderNames = new[] { "Azure Maps", "Google Maps" };
         private static readonly int[] monthDays = new int[] { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
         private byte[] accessTokenBuffer = new byte[512];
+        private byte[] azureKeyBuffer = new byte[512];
+        private byte[] googleKeyBuffer = new byte[512];
+        private int selectedGeocodingProvider = 0; // index into geocodingProviderNames (the one shown in the UI)
+        private int activeGeocodingProvider = -1;  // provider currently assigned to the coordinator, -1 if none
         private byte[] geocodingTextBuffer = new byte[256];
         private byte[] pinNameTextBuffer = new byte[256];
 
@@ -79,10 +78,16 @@ namespace CesiumDemo
         protected async override void CreateScene()
         {
             this.LoadSavedAccessToken(saveAccessTokenFileName_cesium);
+            this.LoadSavedAccessToken(saveAccessTokenFileName_azure, azureKeyBuffer);
+            this.LoadSavedAccessToken(saveAccessTokenFileName_google, googleKeyBuffer);
             this.assetsService = Application.Current.Container.Resolve<AssetsService>();
             this.pinModel = await GLBRuntime.Instance.Read("Meshes/pin.glb");
             this.pinsEfect = this.assetsService.Load<Effect>(DefaultResourcesIDs.StandardEffectID);
             this.opaqueLayer = this.assetsService.Load<RenderLayerDescription>(DefaultResourcesIDs.OpaqueRenderLayerID);
+
+            var rp = this.Managers.RenderManager.RenderPipeline.DefaultRenderPath as ForwardRenderPath;
+            rp.GBufferPassIsEnabled = false;
+            rp.ZPrePassIsEnabled = false;
         }
 
         private static unsafe string bytePtrToString(byte* bufferPtr)
@@ -101,19 +106,62 @@ namespace CesiumDemo
         private string getAccessTokenStr() => byteArrayToString(accessTokenBuffer);
         private string getInputTextStr() => byteArrayToString(geocodingTextBuffer);
 
-        private void LoadSavedAccessToken(string filePath)
+        private void LoadSavedAccessToken(string filePath) => this.LoadSavedAccessToken(filePath, accessTokenBuffer);
+
+        private void LoadSavedAccessToken(string filePath, byte[] buffer)
         {
             var str = System.IO.File.Exists(filePath) ? System.IO.File.ReadAllText(filePath) : string.Empty;
-            for (int i = 0; i < str.Length && i < accessTokenBuffer.Length; i++)
+            for (int i = 0; i < str.Length && i < buffer.Length; i++)
             {
-                accessTokenBuffer[i] = (byte)str[i];
+                buffer[i] = (byte)str[i];
             }
-            accessTokenBuffer[Math.Min(str.Length, accessTokenBuffer.Length - 1)] = 0; // null terminator
+            buffer[Math.Min(str.Length, buffer.Length - 1)] = 0; // null terminator
         }
 
-        private void SaveAccessToken(string filePath)
+        private void SaveAccessToken(string filePath) => this.SaveAccessToken(filePath, accessTokenBuffer);
+
+        private void SaveAccessToken(string filePath, byte[] buffer)
         {
-            System.IO.File.WriteAllText(filePath, this.getAccessTokenStr());
+            System.IO.File.WriteAllText(filePath, byteArrayToString(buffer));
+        }
+
+        private byte[] GetGeocodingKeyBuffer(int provider) => provider == 0 ? azureKeyBuffer : googleKeyBuffer;
+
+        private string GetGeocodingSaveFileName(int provider) => provider == 0 ? saveAccessTokenFileName_azure : saveAccessTokenFileName_google;
+
+        /// <summary>
+        /// Assigns the geocoding service of the given provider (using the key typed in its buffer) to the coordinator,
+        /// and persists the key so it is restored next time.
+        /// </summary>
+        private void ApplyGeocodingProvider(int provider)
+        {
+            var buffer = this.GetGeocodingKeyBuffer(provider);
+            var key = byteArrayToString(buffer);
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                return;
+            }
+
+            this.cesiumCoordinator.GeocodingService = provider == 0
+                ? new AzureMapsGeocodingService(key)
+                : new GoogleMapsGeocodingService(key);
+            this.activeGeocodingProvider = provider;
+            this.geocodingSuggestions_mutex.WaitOne();
+            this.geocodingSuggestions.Clear(); // suggestions from the previous provider are no longer valid
+            this.geocodingSuggestions_mutex.ReleaseMutex();
+            this.SaveAccessToken(this.GetGeocodingSaveFileName(provider), buffer);
+        }
+
+        /// <summary>
+        /// Called when the coordinator is created, with whatever keys were saved from previous runs (empty if none).
+        /// Returns the provider index to activate right away (0 = Azure Maps, 1 = Google Maps),
+        /// or -1 to leave geocoding unconfigured until the user presses "Apply" in the UI.
+        /// </summary>
+        private int ChooseStartupGeocodingProvider(string savedAzureKey, string savedGoogleKey)
+        {
+            // TODO(human): decide which provider to activate when saved keys exist.
+            // Cases to handle: only Azure saved, only Google saved, both saved, none saved.
+            return -1;
         }
 
         private void CreateCesiumCoordinator(string accessToken)
@@ -122,10 +170,22 @@ namespace CesiumDemo
             {
                 AccessToken = accessToken,
                 EntityManager = this.Managers.EntityManager,
+                OverlayProvider = RasterOverlayProvider.BingAerial,
             };
+
+            // Since Evergine.Cesium 2026.9 the coordinator starts with no tilesets, so nothing renders until we add them.
+            cesiumLoader.AddOverlayedTileset(TerrainAssetId, RasterOverlayProvider.BingAerial, "Terrain"); // Cesium World Terrain + imagery overlay
+            cesiumLoader.AddGeometryTileset(BuildingsAssetId, "Buildings");                                // Cesium OSM Buildings
 
             this.Managers.AddManager(cesiumLoader);
             this.cesiumCoordinator = cesiumLoader;
+
+            int startupProvider = this.ChooseStartupGeocodingProvider(byteArrayToString(azureKeyBuffer), byteArrayToString(googleKeyBuffer));
+            if (startupProvider >= 0 && startupProvider < geocodingProviderNames.Length)
+            {
+                this.selectedGeocodingProvider = startupProvider;
+                this.ApplyGeocodingProvider(startupProvider);
+            }
         }
 
         protected override void Start()
@@ -232,7 +292,6 @@ namespace CesiumDemo
                     string accessToken = this.getAccessTokenStr();
                     this.CreateCesiumCoordinator(accessToken);
                     this.SaveAccessToken(saveAccessTokenFileName_cesium);
-                    this.LoadSavedAccessToken(saveAccessTokenFileName_azure);
                     this.depthPicking = new DepthPicking(this.Managers.RenderManager);
                     this.graphicsPresenter.FocusedDisplay.MouseDispatcher.MouseButtonDown += this.OnMouseButtonDown;
                 }
@@ -265,6 +324,49 @@ namespace CesiumDemo
             ImguiNative.igEnd();
         }
 
+        private unsafe void gui_geocodingProviderSettings()
+        {
+            if (ImguiNative.igBeginCombo("Provider##geocoding", geocodingProviderNames[this.selectedGeocodingProvider], ImGuiComboFlags.None))
+            {
+                for (int i = 0; i < geocodingProviderNames.Length; i++)
+                {
+                    bool isSelected = this.selectedGeocodingProvider == i;
+                    if (ImguiNative.igSelectable_Bool(geocodingProviderNames[i], isSelected, ImGuiSelectableFlags.None, Vector2.Zero))
+                    {
+                        this.selectedGeocodingProvider = i;
+                    }
+                    if (isSelected)
+                    {
+                        ImguiNative.igSetItemDefaultFocus();
+                    }
+                }
+                ImguiNative.igEndCombo();
+            }
+
+            var keyBuffer = this.GetGeocodingKeyBuffer(this.selectedGeocodingProvider);
+            fixed (byte* keyBufferPtr = keyBuffer)
+            {
+                // one buffer per provider, so switching the combo never loses the other provider's key
+                ImguiNative.igInputTextWithHint("##geocoding_key", $"{geocodingProviderNames[this.selectedGeocodingProvider]} API key",
+                    keyBufferPtr, (uint)keyBuffer.Length, ImGuiInputTextFlags.None, null, null);
+            }
+
+            bool isActive = this.cesiumCoordinator.IsGeocodingConfigured && this.activeGeocodingProvider == this.selectedGeocodingProvider;
+            if (ImguiNative.igButton(isActive ? "update key" : "use this provider", new Vector2(0, 0)))
+            {
+                this.ApplyGeocodingProvider(this.selectedGeocodingProvider);
+            }
+
+            if (this.cesiumCoordinator.IsGeocodingConfigured && this.activeGeocodingProvider >= 0)
+            {
+                ImguiNative.igText($"Active: {geocodingProviderNames[this.activeGeocodingProvider]}");
+            }
+            else
+            {
+                ImguiNative.igText("Enter an API key to enable geocoding");
+            }
+        }
+
         private unsafe void gui_mainMenu()
         {
             ImguiNative.igSetNextWindowPos(new Vector2(0, 0), ImGuiCond.FirstUseEver, new Vector2(0, 0));
@@ -273,14 +375,14 @@ namespace CesiumDemo
             { // Provider selection
                 var currentProvider = cesiumCoordinator.OverlayProvider;
                 var availableProviders = new[] {
-                    TerrainOverlayProvider.BingAerial,
-                    TerrainOverlayProvider.BingAerialWithLabels,
-                    TerrainOverlayProvider.BingRoads,
-                    TerrainOverlayProvider.GoogleMapsSatellite,
-                    TerrainOverlayProvider.GoogleMapsSatelliteWithLabels,
-                    TerrainOverlayProvider.GoogleMapsRoads,
-                    TerrainOverlayProvider.GoogleMapsLabelsOnly,
-                    TerrainOverlayProvider.GoogleMapsContours
+                    RasterOverlayProvider.BingAerial,
+                    RasterOverlayProvider.BingAerialWithLabels,
+                    RasterOverlayProvider.BingRoads,
+                    RasterOverlayProvider.GoogleMapsSatellite,
+                    RasterOverlayProvider.GoogleMapsSatelliteWithLabels,
+                    RasterOverlayProvider.GoogleMapsRoads,
+                    RasterOverlayProvider.GoogleMapsLabelsOnly,
+                    RasterOverlayProvider.GoogleMapsContours
                 };
                 if (ImguiNative.igBeginCombo("Provider", currentProvider.ToString(), ImGuiComboFlags.None))
                 {
@@ -302,6 +404,7 @@ namespace CesiumDemo
 
             { // geocoding
                 ImguiNative.igSeparatorText("Geocoding");
+                this.gui_geocodingProviderSettings();
                 if (this.cesiumCoordinator.IsGeocodingConfigured)
                 {
                     fixed (byte* inputTextBufferPtr = this.geocodingTextBuffer)
@@ -349,24 +452,13 @@ namespace CesiumDemo
                     {
                         if (ImguiNative.igButton(suggestion.DisplayText, new Vector2(200, 0)))
                         {
-                            this.cesiumCoordinator.WorldCamera.FlyTo(suggestion.Latitude, suggestion.Longitude, 2);
+                            if (suggestion.Latitude.HasValue && suggestion.Longitude.HasValue)
+                            {
+                                this.cesiumCoordinator.WorldCamera.FlyTo(suggestion.Latitude.Value, suggestion.Longitude.Value, 2);
+                            }
                         }
                     }
                     geocodingSuggestions_mutex.ReleaseMutex();
-                }
-                else
-                {
-                    ImguiNative.igText("To enable geocoding features,\nplease input an Azure Maps access token:");
-                    var textBoxSize = new Vector2(-float.Epsilon, ImguiNative.igGetTextLineHeight() * 10);
-                    fixed (byte* accessTokenBufferPtr = accessTokenBuffer)
-                    {
-                        ImguiNative.igInputTextMultiline("##access_token", accessTokenBufferPtr, (uint)accessTokenBuffer.Length, textBoxSize, ImGuiInputTextFlags.WordWrap, null, null);
-                    }
-                    if (ImguiNative.igButton("connect", new Vector2(0, 0)))
-                    {
-                        this.cesiumCoordinator.AzureMapsKey = this.getAccessTokenStr();
-                        this.SaveAccessToken(saveAccessTokenFileName_azure);
-                    }
                 }
             }
 

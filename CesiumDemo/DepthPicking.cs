@@ -1,12 +1,8 @@
-﻿using Evergine.Bindings.CesiumNative;
-using Evergine.Common.Graphics;
-using Evergine.Common.Input.Mouse;
+﻿using Evergine.Common.Graphics;
 using Evergine.Framework;
-using Evergine.Framework.Graphics;
 using Evergine.Framework.Managers;
 using Evergine.Framework.Services;
 using Evergine.Mathematics;
-using System;
 
 namespace CesiumDemo
 {

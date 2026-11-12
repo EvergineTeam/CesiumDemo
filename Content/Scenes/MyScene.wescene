@@ -104,7 +104,6 @@ Items:
           B: 1.0
           G: 1.0
           R: 1.0
-        ShadowBias: 0.00499999989
         ShadowDistance: 80.0
         ShadowOpacity: 1.0
       - !Evergine.Cesium.Components.SunLightDirection,Evergine.Cesium
